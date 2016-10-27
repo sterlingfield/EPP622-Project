@@ -155,3 +155,6 @@ Maximum file size: 1000000000B
 Adding sequences from FASTA; added 48315 sequences in 2.14514 seconds.
 
 [Newton:rho36 input]$ blastp -query peptides -db GCF_000001735.3_TAIR10_protein.faa -out MS_alignment_to_Arabidopsis.results.txt
+[Newton:rho36 input]$ ls
+1_blast         GCF_000001735.3_TAIR10_protein.faa      GCF_000001735.3_TAIR10_protein.faa.pin  MS_alignment_to_Arabidopsis.results.txt  README.md
+EPP622-Project  GCF_000001735.3_TAIR10_protein.faa.phr  GCF_000001735.3_TAIR10_protein.faa.psq  peptides
