@@ -133,13 +133,25 @@ Site tables	Oxidation (M)Sites.txt
 [Newton:sigma00 input]$ module load blast/2.4.0
 [Newton:sigma00 input]$ mkdir 1_blast
 [Newton:sigma00 input]$ head peptides 
+>
 AAQEALYVR	
+>
 AGKEENVKAAQEALYV
+>
 AQEALYVRCKANSEATAFNKQSGCMDENVSCEKWAK	
+>
 IHVKSFERAFNKQSGC	
-VSCEKWAKAGECQKNPALEESNYELEGK	
-ASYMDKVRALEESNYE	
-SNYELEGKIKEWYEKHDLDQVAGR	
-KITSSGQRDLDQVAGR	
-DLDQVAGRIAAAVIG 
-INGFGR
+>
+VSCEKWAKAGECQKNPALEESNYELEGK
+[Newton:rho36 input]$ makeblastdb -in GCF_000001735.3_TAIR10_protein.faa -dbtype prot
+
+
+Building a new DB, current time: 10/27/2016 14:36:59
+New DB name:   /data/home/sfield3/MS/input/GCF_000001735.3_TAIR10_protein.faa
+New DB title:  GCF_000001735.3_TAIR10_protein.faa
+Sequence type: Protein
+Keep MBits: T
+Maximum file size: 1000000000B
+Adding sequences from FASTA; added 48315 sequences in 2.14514 seconds.
+
+[Newton:rho36 input]$ blastp -query peptides -db GCF_000001735.3_TAIR10_protein.faa -out MS_alignment_to_Arabidopsis.results.txt
