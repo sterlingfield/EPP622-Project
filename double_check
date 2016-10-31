@@ -745,4 +745,26 @@ AT5G61170.1;AT5G15520.1;AT3G02080.1
 AT5G64050.1
 	AT5G65020.1
 AT5G65240.1;AT5G65240.2
-~~~
+~~~~
+That looks pretty hairy, so I then just decided to look at proteins that are in both of my samples:
+~~~~
+[Newton:sigma00 2_doublecheck]$ comm -1 -2 <(sort EGTA_Proteins) <(sort Calcium_proteins)
+AT1G07930.2;AT5G60390.3;AT5G60390.1;AT1G07940.2;AT1G07940.1;AT1G07930.1;AT1G07920.1
+AT5G15200.2;AT5G15200.1
+~~~~
+My sample that had EGTA did not have any of the same proteins as those from a previous experiment (AL), 
+which makes sense becouse they used calcium in their buffer.
+~~~~
+[Newton:sigma00 2_doublecheck]$ comm -1 -2 <(sort EGTA_Proteins) <(sort AL_proteins)
+[Newton:sigma00 2_doublecheck]$ comm -1 -2 <(sort EGTA_Proteins) <(sort AL_WTcontrolproteins)
+~~~~
+My calcium sample did have some over lapping proteins with those from a previous experiment
+~~~~
+[Newton:sigma00 2_doublecheck]$ comm -1 -2 <(sort Calcium_proteins) <(sort AL_proteins)
+AT3G20050.1
+AT3G52930.1
+AT5G56350.1
+Newton:sigma00 2_doublecheck]$ comm -1 -2 <(sort Calcium_proteins) <(sort AL_WTcontrolproteins)
+[Newton:sigma00 2_doublecheck]$
+~~~~
+
