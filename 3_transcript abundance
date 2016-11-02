@@ -1,0 +1,22 @@
+[Newton:sigma00 input]$ mkdir 3_transcriptabundance
+[Newton:sigma00 input]$ cd 3_transcriptabundance/
+~~~~
+added TAIR assession numbers of clusters 1 through 4
+~~~~
+[Newton:sigma00 3_transcriptabundance]$ nano cluster1
+[Newton:sigma00 3_transcriptabundance]$ nano cluster2
+[Newton:sigma00 3_transcriptabundance]$ nano cluster3
+[Newton:sigma00 3_transcriptabundance]$ nano cluster4
+[Newton:sigma00 3_transcriptabundance]$ cp ../2_doublecheck/Calcium_proteins .
+[Newton:sigma00 3_transcriptabundance]$ cp ../2_doublecheck/EGTA_Proteins .
+[Newton:sigma00 3_transcriptabundance]$ comm -1 -2 <(sort Calcium_proteins) <(sort cluster1)
+[Newton:sigma00 3_transcriptabundance]$ comm -1 -2 <(sort Calcium_proteins) <(sort cluster2)
+[Newton:sigma00 3_transcriptabundance]$ comm -1 -2 <(sort Calcium_proteins) <(sort cluster3)
+[Newton:sigma00 3_transcriptabundance]$ comm -1 -2 <(sort Calcium_proteins) <(sort cluster4)
+[Newton:sigma00 3_transcriptabundance]$ comm -1 -2 <(sort EGTA_Proteins) <(sort cluster1)
+[Newton:sigma00 3_transcriptabundance]$ comm -1 -2 <(sort EGTA_Proteins) <(sort cluster2)
+[Newton:sigma00 3_transcriptabundance]$ comm -1 -2 <(sort EGTA_Proteins) <(sort cluster3)
+[Newton:sigma00 3_transcriptabundance]$ comm -1 -2 <(sort EGTA_Proteins) <(sort cluster4)
+[Newton:sigma00 3_transcriptabundance]$ 
+~~~~
+So none of these proteins from MS are from these previously looked at transcripts
