@@ -1,0 +1,96 @@
+Checked to see if any prion-domain containing proteins are in my list (prion domain proteins are from Chakrabortee et al, 2016)
+This is background stuff done.
+~~~~
+[Newton:sigma00 input]$ ls
+1_blast                 5_yeast_SGproteome      index.html
+2_doublecheck           6_yeastPBproteome       peptides
+3_transcriptabundance   collaborators_peptides  README.md
+4_mammalian_SGproteome  EPP622-Project
+[Newton:sigma00 input]$ mkdir 7_prion_domain
+[Newton:sigma00 input]$ nano prion_domainAT
+[Newton:sigma00 input]$ ls -r
+README.md       EPP622-Project          5_yeast_SGproteome      1_blast
+prion_domainAT  collaborators_peptides  4_mammalian_SGproteome
+peptides        7_prion_domain          3_transcriptabundance
+index.html      6_yeastPBproteome       2_doublecheck
+[Newton:sigma00 input]$ cd 1_blast/
+[Newton:sigma00 1_blast]$ ls
+GCF_000001735.3_TAIR10_protein.faa      GCF_000001735.3_TAIR10_protein.faa.psq
+GCF_000001735.3_TAIR10_protein.faa.phr  MS_alignment_to_Arabidopsis.results.txt
+GCF_000001735.3_TAIR10_protein.faa.pin
+[Newton:sigma00 1_blast]$ cd ..
+[Newton:sigma00 input]$ cd 2_doublecheck/
+[Newton:sigma00 2_doublecheck]$ ls
+AL_proteins           Calcium_proteins  EGTA_Proteins
+AL_WTcontrolproteins  doublecheck.py
+[Newton:sigma00 2_doublecheck]$ cd ..
+[Newton:sigma00 input]$ comm -1 -2 <(sort 2_doublecheck/Calcium_proteins) <(sort prion_domainAT)
+[Newton:sigma00 input]$ comm -1 -2 <(sort 2_doublecheck/EGTA_Proteins) <(sort prion_domainAT)
+[Newton:sigma00 input]$ cd 2_doublecheck/
+[Newton:sigma00 2_doublecheck]$ nano Calcium_proteins 
+[Newton:sigma00 2_doublecheck]$ cut -c1-9 Calcium_proteins 
+AT1G07930
+AT1G12900
+AT1G16300
+AT1G20620
+AT1G51640
+AT1G62240
+AT4G36130
+AT2G36880
+AT5G61170
+AT3G17790
+AT3G20050
+AT3G46730
+AT3G51620
+AT3G52930
+AT3G59140
+AT4G18465
+AT4G20850
+AT5G15200
+AT5G24350
+AT5G43050
+AT5G56350
+AT5G64050
+AT5G65240
+[Newton:sigma00 2_doublecheck]$ cd ..
+[Newton:sigma00 input]$ ls
+1_blast                 5_yeast_SGproteome      EPP622-Project  README.md
+2_doublecheck           6_yeastPBproteome       index.html
+3_transcriptabundance   7_prion_domain          peptides
+4_mammalian_SGproteome  collaborators_peptides  prion_domainAT
+[Newton:sigma00 input]$ nano cleanCalciumATProteins
+[Newton:sigma00 input]$ cd 2_doublecheck/
+[Newton:sigma00 2_doublecheck]$ ls
+AL_proteins           Calcium_proteins  EGTA_Proteins
+AL_WTcontrolproteins  doublecheck.py
+[Newton:sigma00 2_doublecheck]$ nano EGTA_Proteins 
+[Newton:sigma00 2_doublecheck]$ cut -c1-9 EGTA_Proteins 
+AT1G06170
+AT1G07930
+AT5G65360
+AT1G10000
+AT1G10320
+AT1G13440
+AT1G28090
+AT1G48160
+AT1G62800
+AT3G04420
+AT3G62470
+AT4G15236
+AT4G36150
+AT5G15200
+AT5G53930
+[Newton:sigma00 2_doublecheck]$ cd ..
+[Newton:sigma00 input]$ nano CleanEGTAATProteins
+~~~~
+This is where I actually check to see if any of the CML38 pulled down proteins have prion domains
+
+~~~~
+[Newton:sigma00 input]$ comm -1 -2 <(cleanCalciumATProteins) <(sort prion_domainAT)
+-bash: cleanCalciumATProteins: command not found
+[Newton:sigma00 input]$ comm -1 -2 <(sort cleanCalciumATProteins) <(sort prion_domainAT)
+AT1G62240
+[Newton:sigma00 input]$ comm -1 -2 <(sort CleanEGTAATProteins) <(sort prion_domainAT)
+[Newton:sigma00 input]$ 
+~~~~
+Only AT1G62240 has a prion domain. AT1G62240 is a "unknown protein; FUNCTIONS IN: molecular_function unknown; INVOLVED IN: biological_process unknown; LOCATED IN: endomembrane system", so this doesnt really tell me much. 
