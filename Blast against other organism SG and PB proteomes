@@ -1,0 +1,192 @@
+Downloaded fasta files from UniProt that contained amino acid sequences from mammalian tissue generated stress granules (http://www.uniprot.org/uploadlists/). I put this
+into newton.
+~~~~
+sterlingfield:~ sterlingfield$ scp /Users/sterlingfield/Downloads/uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta sfield3@login.newton.utk.edu:/data/home/sfield3/MS
+sfield3@login.newton.utk.edu's password: 
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA 100%  321KB 320.6KB/s   00:00    
+~~~~
+
+I then blasted the peptides I got out of MaxQuant from earlier (peptides) against this data set to see if there are any 
+similarities between the two sets
+
+~~~~
+
+[Newton:sigma00 MS]$ module load blast
+[Newton:sigma00 MS]$ ls
+input
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta
+[Newton:sigma00 MS]$ cd input/
+[Newton:sigma00 input]$ ls
+1_blast
+2_doublecheck
+3_transcriptabundance
+collaborators_peptides
+EPP622-Project
+index.html
+mamalian_SG_proteome
+peptides
+README.md
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta
+[Newton:sigma00 input]$ mkdir 4_mammalian_SGproteome
+[Newton:sigma00 input]$ makeblastdb -in uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta -dbtype prot
+
+
+Building a new DB, current time: 11/10/2016 09:40:22
+New DB name:   /data/home/sfield3/MS/input/uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta
+New DB title:  uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta
+Sequence type: Protein
+Keep MBits: T
+Maximum file size: 1000000000B
+Adding sequences from FASTA; added 403 sequences in 0.0304091 seconds.
+
+[Newton:sigma00 input]$ ls
+1_blast
+2_doublecheck
+3_transcriptabundance
+4_mammalian_SGproteome
+collaborators_peptides
+EPP622-Project
+index.html
+mamalian_SG_proteome
+peptides
+README.md
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta.phr
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta.pin
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta.psq
+[Newton:sigma00 input]$ blastp -query peptides -db uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta -out MS_alignment_to_Arabidopsis.results.txt
+[Newton:sigma00 input]$ ls
+1_blast
+2_doublecheck
+3_transcriptabundance
+4_mammalian_SGproteome
+collaborators_peptides
+EPP622-Project
+index.html
+mamalian_SG_proteome
+MS_alignment_to_Arabidopsis.results.txt
+peptides
+README.md
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta.phr
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta.pin
+uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta.psq
+
+[Newton:sigma00 input]$ nano MS_alignment_to_Arabidopsis.results.txt 
+
+[Newton:sigma00 input]$ mv mamalian_SG_proteome 4_mammalian_SGproteome/
+[Newton:sigma00 input]$ mv MS_alignment_to_Arabidopsis.results.txt  4_mammalian_SGproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta 4_mammalian_SGproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta.phr 4_mammalian_SGproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta.pin 4_mammalian_SGproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM201611108A530B6CA0138AFAA6D2B97CE8C2A924B3FECE2.fasta.psq 4_mammalian_SGproteome/
+[Newton:sigma00 input]$ ls
+1_blast        3_transcriptabundance   collaborators_peptides  index.html  README.md
+2_doublecheck  4_mammalian_SGproteome  EPP622-Project          peptides
+~~~~
+The results of the blast all had e-values higher than 0.01, suggesting that there really arnt any similarities between the my peptides
+and those pulled down from mamalian cells. This could be explained by the large differences between the two in terms of evolution, 
+as well as that these were generated using different stresses (hypoxia for me, sodium azide for them). There has also been work done
+on yeast stress granules
+~~~~
+sterlingfield:Downloads sterlingfield$ scp /Users/sterlingfield/Downloads/uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta.gz sfield3@login.newton.utk.edu:/data/home/sfield3/MS/input
+sfield3@login.newton.utk.edu's password: 
+uniprot-yourlist%3AM2016111014483A1C7ED25EE83 100%   55KB  55.4KB/s   00:00
+~~~~
+Then I made a database and blasted my peptideds against the yeast SG proteome
+~~~~
+[Newton:sigma00 input]$ ls
+1_blast                4_mammalian_SGproteome  index.html  uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta.gz
+2_doublecheck          collaborators_peptides  peptides
+3_transcriptabundance  EPP622-Project          README.md
+[Newton:sigma00 input]$ mkdir 5_yeast_SGproteome
+[Newton:sigma00 input]$ gunzip uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta.gz 
+[Newton:sigma00 input]$ ls
+1_blast                 5_yeast_SGproteome      peptides
+2_doublecheck           collaborators_peptides  README.md
+3_transcriptabundance   EPP622-Project          uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta
+4_mammalian_SGproteome  index.html
+[Newton:sigma00 input]$ makeblastdb -in uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta -dbtype prot
+
+
+Building a new DB, current time: 11/10/2016 10:09:26
+New DB name:   /data/home/sfield3/MS/input/uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta
+New DB title:  uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta
+Sequence type: Protein
+Keep MBits: T
+Maximum file size: 1000000000B
+Adding sequences from FASTA; added 156 sequences in 0.014559 seconds.
+[Newton:sigma00 input]$ blastp -query peptides -db uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta -out MS_alignment_to_yeast.results.txt
+[Newton:sigma00 input]$ ls
+1_blast                 MS_alignment_to_yeast.results.txt
+2_doublecheck           peptides
+3_transcriptabundance   README.md
+4_mammalian_SGproteome  uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta
+5_yeast_SGproteome      uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta.phr
+collaborators_peptides  uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta.pin
+EPP622-Project          uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta.psq
+index.html
+[Newton:sigma00 input]$ nano uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta
+[Newton:sigma00 input]$ nano MS_alignment_to_yeast.results.txt 
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta 5_yeast_SGproteome/
+[Newton:sigma00 input]$ mv MS_alignment_to_yeast.results.txt 5_yeast_SGproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta.phr 5_yeast_SGproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta.pin 5_yeast_SGproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM2016111014483A1C7ED25EE8374758DF3FD545FD4749C9W.fasta.psq 5_yeast_SGproteome/
+[Newton:sigma00 input]$ ls
+1_blast        3_transcriptabundance   5_yeast_SGproteome      EPP622-Project  peptides
+2_doublecheck  4_mammalian_SGproteome  collaborators_peptides  index.html      README.md
+~~~~
+
+All had high evalues (>0.1) with the exception of [sp|P34756|FAB1_YEAST 1-phosphatidylinositol 3-phosphate 5-kinas...  29.6    1e-04], 
+[sp|P19358|METK2_YEAST S-adenosylmethionine synthase 2 OS=Saccha...  21.9    0.028]. There was more hits with my peptides than with
+mammalian SGs, but still not a lot. I also wanted to try tis with processing bodies (sites of mRNA degradation) in yeast.
+
+~~~~
+[Newton:sigma00 input]$ ls
+1_blast                 5_yeast_SGproteome      peptides
+2_doublecheck           collaborators_peptides  README.md
+3_transcriptabundance   EPP622-Project          uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta.gz
+4_mammalian_SGproteome  index.html
+[Newton:sigma00 input]$ mkdir 6_yeastPBproteome
+[Newton:sigma00 input]$ gunzip uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta.gz 
+[Newton:sigma00 input]$ ls
+1_blast                 5_yeast_SGproteome      index.html
+2_doublecheck           6_yeastPBproteome       peptides
+3_transcriptabundance   collaborators_peptides  README.md
+4_mammalian_SGproteome  EPP622-Project          uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta
+[Newton:sigma00 input]$ makeblastdb -in uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta -dbtype prot
+
+
+Building a new DB, current time: 11/10/2016 10:20:56
+New DB name:   /data/home/sfield3/MS/input/uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta
+New DB title:  uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta
+Sequence type: Protein
+Keep MBits: T
+Maximum file size: 1000000000B
+Adding sequences from FASTA; added 51 sequences in 0.00632191 seconds.
+[Newton:sigma00 input]$ blastp -query peptides -db uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta -out MS_alignment_to_yeastPBproteome.results.txt
+[Newton:sigma00 input]$ ls
+1_blast                 index.html
+2_doublecheck           MS_alignment_to_yeastPBproteome.results.txt
+3_transcriptabundance   peptides
+4_mammalian_SGproteome  README.md
+5_yeast_SGproteome      uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta
+6_yeastPBproteome       uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta.phr
+collaborators_peptides  uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta.pin
+EPP622-Project          uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta.psq
+[Newton:sigma00 input]$ cd MS_alignment_to_yeastPBproteome.results.txt 
+-bash: cd: MS_alignment_to_yeastPBproteome.results.txt: Not a directory
+[Newton:sigma00 input]$ nano MS_alignment_to_yeastPBproteome.results.txt 
+[Newton:sigma00 input]$ nano MS_alignment_to_yeastPBproteome.results.txt 
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta 6_yeastPBproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta.phr 6_yeastPBproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta.pin 6_yeastPBproteome/
+[Newton:sigma00 input]$ mv uniprot-yourlist%3AM20161110AAFB7E4D2F1D05654627429E83DA5CCE985730L.fasta.psq 6_yeastPBproteome/
+[Newton:sigma00 input]$ mv MS_alignment_to_yeastPBproteome.results.txt 6_yeastPBproteome/
+[Newton:sigma00 input]$ ls
+1_blast        3_transcriptabundance   5_yeast_SGproteome  collaborators_peptides  index.html  README.md
+2_doublecheck  4_mammalian_SGproteome  6_yeastPBproteome   EPP622-Project          peptides
+~~~~
+Peptideds that had <0.1 evalue aligned against the yeast processing body proteome include 
+[sp|P30771|NAM7_YEAST ATP-dependent helicase NAM7 OS=Saccharomyc...  22.7    0.016]. 
